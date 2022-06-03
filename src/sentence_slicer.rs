@@ -1,36 +1,37 @@
-pub fn slice_string(s: &String) -> [&str; 10] {
+pub fn slice_string(s: &String) -> Vec<&str> {
     let bytes = s.as_bytes();
-    let mut words: [&str; 10] = ["","","","","","","","","",""];
+    let mut words: Vec<&str> = Vec::new();
 
-    let mut n: usize = 0;
     let mut spot: usize = 0;
 
     let mut letters: bool = true;
 
     for (i, &item) in bytes.iter().enumerate() {
-        if item == b' ' || item == b'.' || item == b',' {
+        if illegal_character(item) {
             if letters {
-                words[n] = &s[spot..i];
-                n += 1;
+                words.push(&s[spot..i]);
             }
             letters = false;
         }
-        if !letters && !(item == b' ' || item == b'.' || item == b',') {
+        if !letters && !(illegal_character(item)) {
             letters = true;
             spot = i;
         }
     }
-    words[n] = &s[spot..];
 
     words
 }
 
+fn illegal_character(item: u8) -> bool {
+    item == b' ' || item == b'.' || item == b',' || item == b'"' || item == b'/'
+}
+
 pub fn check_for_word(sentence: String, word: &str) -> bool {
-    let words: [&str; 10] = slice_string(&sentence);
+    let words: Vec<&str> = slice_string(&sentence);
     let mut found_word: bool = false;
 
-    for i in words {
-        if i == word {
+    for i in &words {
+        if i.to_lowercase() == word {
             found_word = true;
             break;
         }
