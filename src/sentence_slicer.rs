@@ -4,7 +4,7 @@ pub fn slice_string(s: &String) -> Vec<&str> {
 
     let mut spot: usize = 0;
 
-    let mut letters: bool = true;
+    let mut letters: bool = false;
 
     for (i, &item) in bytes.iter().enumerate() {
         if illegal_character(item) {
@@ -23,7 +23,7 @@ pub fn slice_string(s: &String) -> Vec<&str> {
 }
 
 fn illegal_character(item: u8) -> bool {
-    item == b' ' || item == b'.' || item == b',' || item == b'"' || item == b'/'
+    item == b' ' || item == b'.' || item == b',' || item == b'"' || item == b'/' || item == b';' || item == b'\\' || item == b'\n' || item == b':'
 }
 
 pub fn check_for_word(sentence: String, word: &str) -> bool {
@@ -31,7 +31,7 @@ pub fn check_for_word(sentence: String, word: &str) -> bool {
     let mut found_word: bool = false;
 
     for i in &words {
-        if i.to_lowercase() == word {
+        if i.to_lowercase() == word.to_lowercase() {
             found_word = true;
             break;
         }

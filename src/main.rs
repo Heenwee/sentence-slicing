@@ -28,8 +28,13 @@ fn main() {
     ");
     let word: &str = "gnu";
 
+    // purely for debug purpouses
+    let s: Vec<&str> = slice_string(&sentence);
+
     println!("{}", sentence);
-    println!("{:?}", slice_string(&sentence));
+    println!("{:?}", s);
+    println!("{} words found", s.len());
+    /////////////////////////////
     
     match check_for_word(sentence, word) {
         false =>    println!("Sentence does not contain \"{}\"", word),
